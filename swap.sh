@@ -1,7 +1,15 @@
-sudo fallocate -l 1G /swapfile
+sudo fallocate -l 6G /swapfile
 sudo chmod 600 /swapfile
-ls -lh /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-free -m 
-echo "Created swap, its not persistent and will not be mounted on boot"
+
+# Display swap information to verify it's active
+free -m
+
+# Add entry for the swap in /etc/fstab
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+# Display the contents of /etc/fstab to verify the entry
+cat /etc/fstab
+
+echo "Swap is created and will be mounted on boot."
